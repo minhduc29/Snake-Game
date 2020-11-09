@@ -1,5 +1,6 @@
 import pygame
 import sys
+from time import sleep
 from pygame.locals import *
 from settings import Settings
 from snake import Snake
@@ -16,7 +17,7 @@ class SnakeGame:
         pygame.display.set_caption("Snake Game")
 
         self.snake = Snake(self.settings.snake_color, (10, 10))
-        self.food = Cube(self.snake.random_food(self.settings))
+        self.food = Cube(self.snake.random_food(self.settings), self.settings.food_color)
 
     def run_game(self):
         """Run the main loop of the game"""
@@ -27,8 +28,14 @@ class SnakeGame:
             # Check events
             self.check_events()
 
+            # Main function for the snake to eat the food
+            self.eat_food()
+
+            # Check gameover
+            self.game_over()
+
             # Redraw the window
-            self.settings.redraw_window(self.window, self.snake)
+            self.settings.redraw_window(self.window, self.snake, self.food)
 
     def check_events(self):
         """Check keys event"""
@@ -57,6 +64,23 @@ class SnakeGame:
 
         # Check the movement of the snake's body
         self.snake.check_body_movement(self.settings)
+
+    def eat_food(self):
+        """Function for the snake eating food"""
+        if self.snake.body[0].position == self.food.position:
+            self.snake.longer(self.settings.snake_color)
+            self.food = Cube(self.snake.random_food(self.settings), self.settings.food_color)
+
+    def game_over(self):
+        """Check if game is over"""
+        try:
+            for x in range(len(self.snake.body)):
+                if self.snake.body[x].position in list(map(lambda z:z.position, self.snake.body[x+1:])):
+                    sleep(3)
+                    self.snake.reset(self.settings.snake_color, (10, 10))
+        except:
+            sleep(3)
+            self.snake.reset(self.settings.snake_color, (10, 10))
 
 if __name__ == '__main__':
     sg = SnakeGame()

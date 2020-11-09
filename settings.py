@@ -11,16 +11,19 @@ class Settings:
         self.black = (0, 0, 0)
         self.white = (255, 255, 255)
         self.snake_color = (0, 153, 255)
+        self.food_color = (255, 0, 0)
+        self.game_active = False
 
     def time(self):
         """Main settings for the time delay and fps of the game"""
         pygame.time.delay(10)
         pygame.time.Clock().tick(10)
 
-    def redraw_window(self, window, snake):
+    def redraw_window(self, window, snake, food):
         """Redraw the window"""
         window.fill(self.black)
         snake.draw_snake(window, self)
+        food.draw_cube(window, self)
         self.draw_grid(window)
         pygame.display.update()
 

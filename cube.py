@@ -16,6 +16,7 @@ class Cube:
         self.position = (self.position[0] + self.dirx, self.position[1] + self.diry)
 
     def draw_cube(self, window, settings, head=False):
+        """Draw the cube"""
         size = settings.window_width // settings.rows
         i = self.position[0] # Row
         j = self.position[1] # Column

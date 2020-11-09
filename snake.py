@@ -53,6 +53,7 @@ class Snake:
                 cube.draw_cube(window, settings)
 
     def random_food(self, settings):
+        """Create random food"""
         positions = self.body
 
         while True:
@@ -63,3 +64,30 @@ class Snake:
             else:
                 break
         return (x, y)
+
+    def longer(self, color):
+        """Lengthen the length of the snake"""
+        tail = self.body[-1]
+        dx = tail.dirx
+        dy = tail.diry
+
+        if dx == 1 and dy == 0:
+            self.body.append(Cube((tail.position[0] - 1, tail.position[1]), color))
+        elif dx == -1 and dy == 0:
+            self.body.append(Cube((tail.position[0] + 1, tail.position[1]), color))
+        elif dx == 0 and dy == 1:
+            self.body.append(Cube((tail.position[0], tail.position[1] - 1), color))
+        elif dx == 0 and dy == -1:
+            self.body.append(Cube((tail.position[0], tail.position[1] + 1), color))
+
+        self.body[-1].dirx = dx
+        self.body[-1].diry = dy
+
+    def reset(self, color, position):
+        """Reset the game"""
+        self.head = Cube(position, color)
+        self.body = []
+        self.body.append(self.head)
+        self.turns = {}
+        self.dirx = 0
+        self.diry = 1
