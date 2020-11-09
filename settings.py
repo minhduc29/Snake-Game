@@ -15,8 +15,8 @@ class Settings:
 
     def time(self):
         """Main settings for the time delay and fps of the game"""
-        pygame.time.delay(10)
-        pygame.time.Clock().tick(10)
+        pygame.time.delay(60)
+        pygame.time.Clock().tick(60)
 
     def redraw_window(self, window, snake, food):
         """Redraw the window"""

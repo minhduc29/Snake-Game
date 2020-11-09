@@ -86,7 +86,7 @@ class SnakeGame:
 
     def show_score(self):
         """Display the score if the player lost"""
-        font = pygame.font.SysFont(None, 40)
+        font = pygame.font.SysFont("agencyfb", 45)
         if len(self.snake.body) > 1:
             text = font.render(f'Your score: {len(self.snake.body)}', False, self.settings.white, (255, 128, 0))
         else:
