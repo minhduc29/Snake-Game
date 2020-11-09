@@ -12,7 +12,6 @@ class Settings:
         self.white = (255, 255, 255)
         self.snake_color = (0, 153, 255)
         self.food_color = (255, 0, 0)
-        self.game_active = False
 
     def time(self):
         """Main settings for the time delay and fps of the game"""

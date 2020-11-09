@@ -76,11 +76,28 @@ class SnakeGame:
         try:
             for x in range(len(self.snake.body)):
                 if self.snake.body[x].position in list(map(lambda z:z.position, self.snake.body[x+1:])):
-                    sleep(3)
+                    self.show_score()
+                    sleep(1.5)
                     self.snake.reset(self.settings.snake_color, (10, 10))
         except:
-            sleep(3)
+            self.show_score()
+            sleep(1.5)
             self.snake.reset(self.settings.snake_color, (10, 10))
+
+    def show_score(self):
+        """Display the score if the player lost"""
+        font = pygame.font.SysFont(None, 40)
+        if len(self.snake.body) > 1:
+            text = font.render(f'Your score: {len(self.snake.body)}', False, self.settings.white, (255, 128, 0))
+        else:
+            text = font.render(f'Resetting...', False, self.settings.white, (255, 128, 0))
+        text_rect = text.get_rect()
+        text_rect.center = self.window.get_rect().center
+        button = pygame.Rect((0, 0, 250, 100))
+        button.center = self.window.get_rect().center
+        self.window.fill((255, 128, 0), button)
+        self.window.blit(text, text_rect)
+        pygame.display.update()
 
 if __name__ == '__main__':
     sg = SnakeGame()
