@@ -3,6 +3,7 @@ import sys
 from pygame.locals import *
 from settings import Settings
 from snake import Snake
+from cube import Cube
 
 class SnakeGame:
     """Overall class to manage the game"""
@@ -15,15 +16,19 @@ class SnakeGame:
         pygame.display.set_caption("Snake Game")
 
         self.snake = Snake(self.settings.snake_color, (10, 10))
+        self.food = Cube(self.snake.random_food(self.settings))
 
     def run_game(self):
         """Run the main loop of the game"""
         while True:
+            # Time delay settings
+            self.settings.time()
+
             # Check events
             self.check_events()
 
-            # Main settings for the game
-            self.settings.settings(self.window)
+            # Redraw the window
+            self.settings.redraw_window(self.window, self.snake)
 
     def check_events(self):
         """Check keys event"""
@@ -51,7 +56,7 @@ class SnakeGame:
                 self.snake.turns[self.snake.head.position[:]] = [self.snake.dirx, self.snake.diry]
 
         # Check the movement of the snake's body
-        self.snake.check_body_movement()
+        self.snake.check_body_movement(self.settings)
 
 if __name__ == '__main__':
     sg = SnakeGame()

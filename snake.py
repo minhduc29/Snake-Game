@@ -1,18 +1,18 @@
 from cube import Cube
+from random import randrange
 
 class Snake:
     """Class to manage snake object"""
     def __init__(self, color, position):
         """Initialize the snake"""
-        self.color = color
-        self.head = Cube(position)
+        self.head = Cube(position, color)
         self.body = []
         self.body.append(self.head)
         self.turns = {}
         self.dirx = 0
         self.diry = 1
 
-    def check_body_movement(self):
+    def check_body_movement(self, settings):
         """Loop through the snake's body and check direction and position"""
         for i, cube in enumerate(self.body):
             # Current position of the cube on the grid
@@ -34,20 +34,32 @@ class Snake:
             else:
                 # If the cube reaches the edge of the screen or we're just moving normally
                 if cube.dirx == -1 and cube.position[0] <= 0:
-                    cube.position = (self.settings.rows - 1, cube.position[1])
-                elif cube.dirx == 1 and cube.position[0] >= self.settings.rows - 1:
+                    cube.position = (settings.rows - 1, cube.position[1])
+                elif cube.dirx == 1 and cube.position[0] >= settings.rows - 1:
                     cube.position = (0, cube.position[1])
-                elif cube.diry == 1 and cube.position[1] >= self.settings.rows - 1:
+                elif cube.diry == 1 and cube.position[1] >= settings.rows - 1:
                     cube.position = (cube.position[0], 0)
                 elif cube.diry == -1 and cube.position[1] <= 0:
-                    cube.position = (cube.position[0], self.settings.rows - 1)
+                    cube.position = (cube.position[0], settings.rows - 1)
                 else:
                     cube.move(cube.dirx, cube.diry)
 
-    def draw_snake(self, window):
+    def draw_snake(self, window, settings):
         """Draw the snake"""
         for i, cube in enumerate(self.body):
             if i == 0:
-                cube.draw_cube(window, True)
+                cube.draw_cube(window, settings, True)
             else:
-                cube.draw_cube(window)
+                cube.draw_cube(window, settings)
+
+    def random_food(self, settings):
+        positions = self.body
+
+        while True:
+            x = randrange(settings.rows)
+            y = randrange(settings.rows)
+            if len(list(filter(lambda z:z.position == (x, y), positions))) > 0:
+                continue
+            else:
+                break
+        return (x, y)

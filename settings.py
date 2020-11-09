@@ -1,4 +1,5 @@
 import pygame
+from snake import Snake
 
 class Settings:
     """A class to store all settings for Snake Game"""
@@ -6,20 +7,20 @@ class Settings:
         """Initialize the game settings"""
         self.window_width =  700
         self.window_height = 700
-        self.rows = 35
+        self.rows = 28
         self.black = (0, 0, 0)
         self.white = (255, 255, 255)
         self.snake_color = (0, 153, 255)
 
-    def settings(self, window):
-        """Main settings for the game"""
-        pygame.time.delay(50)
+    def time(self):
+        """Main settings for the time delay and fps of the game"""
+        pygame.time.delay(10)
         pygame.time.Clock().tick(10)
-        self.redraw_window(window)
 
-    def redraw_window(self, window):
+    def redraw_window(self, window, snake):
         """Redraw the window"""
         window.fill(self.black)
+        snake.draw_snake(window, self)
         self.draw_grid(window)
         pygame.display.update()
 
