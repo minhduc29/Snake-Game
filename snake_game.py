@@ -1,5 +1,6 @@
 import pygame
 import sys
+import sounds as s
 from time import sleep
 from pygame.locals import *
 from settings import Settings
@@ -70,19 +71,20 @@ class SnakeGame:
         if self.snake.body[0].position == self.food.position:
             self.snake.longer(self.settings.snake_color)
             self.food = Cube(self.snake.random_food(self.settings), self.settings.food_color)
+            s.eat_sound.play()
 
     def game_over(self):
         """Check if game is over"""
         try:
             for x in range(len(self.snake.body)):
                 if self.snake.body[x].position in list(map(lambda z:z.position, self.snake.body[x+1:])):
+                    s.collision_sound.play()
                     self.show_score()
-                    sleep(1.5)
+                    sleep(1.25)
                     self.snake.reset(self.settings.snake_color, (10, 10))
         except:
             self.show_score()
-            sleep(1.5)
-            self.snake.reset(self.settings.snake_color, (10, 10))
+            sleep(0.75)
 
     def show_score(self):
         """Display the score if the player lost"""
