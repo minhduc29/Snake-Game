@@ -90,9 +90,9 @@ class SnakeGame:
         """Display the score if the player lost"""
         font = pygame.font.SysFont("agencyfb", 45)
         if len(self.snake.body) > 1:
-            text = font.render(f'Your score: {len(self.snake.body)}', False, self.settings.white, (255, 128, 0))
+            text = font.render(f'Your score: {len(self.snake.body)}', True, self.settings.white, (255, 128, 0))
         else:
-            text = font.render(f'Resetting...', False, self.settings.white, (255, 128, 0))
+            text = font.render(f'Resetting...', True, self.settings.white, (255, 128, 0))
         text_rect = text.get_rect()
         text_rect.center = self.window.get_rect().center
         button = pygame.Rect((0, 0, 250, 100))
