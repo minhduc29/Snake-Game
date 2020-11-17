@@ -1,5 +1,5 @@
 # Snake Game
-#### _Project #7_
+#### _Project #6_
 - A classic game about a snake eating food to lengthen its length using **_Pygame_**
 
 ## How to play
